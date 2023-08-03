@@ -26,5 +26,6 @@ export async function GET(request, context) {
     return NextResponse.json({ user,follow });
   } catch (error) {
     // return NextResponse.error(error);
+    console.log("error",error)
   }
 }

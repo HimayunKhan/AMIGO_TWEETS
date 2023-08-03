@@ -24,7 +24,7 @@ export default function UserPage({params}) {
     if (!username) {
       return;
     }
-    axios.get("/api/puser?username=" + username).then((response) => {
+    axios.get("/api/users?username=" + username).then((response) => {
 
       setProfileInfo(response.data.user);
       setOriginalUserInfo(response.data.user);
