@@ -68,7 +68,7 @@ export async function GET(request, context) {
       return NextResponse.json({ posts, idsLikedByMe });
     }
   } catch (error) {
-    return NextResponse.error(error);
+    // return NextResponse.error(error);
   }
 }
 
@@ -93,6 +93,6 @@ export async function POST(request, context) {
     }
     return NextResponse.json(post);
   } catch (error) {
-    return NextResponse.error(error);
+    // return NextResponse.error(error);
   }
 }

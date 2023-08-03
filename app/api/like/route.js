@@ -33,6 +33,6 @@ export async function POST(request, context) {
       return NextResponse.json({ like });
     }
   } catch (error) {
-    return NextResponse.error(error);
+    // return NextResponse.error(error);
   }
 }

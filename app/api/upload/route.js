@@ -93,6 +93,6 @@ export async function POST(request, context) {
 
     return new Response("posiiiiii")
   } catch (error) {
-    return NextResponse.error(error);
+    // return NextResponse.error(error);
   }
 }

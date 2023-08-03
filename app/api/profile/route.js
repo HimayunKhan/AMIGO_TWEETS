@@ -19,6 +19,6 @@ export async function PUT(request, context) {
     await User.findByIdAndUpdate(userID, { bio,name,username });
     return new Response("okk");
   } catch (error) {
-    return NextResponse.error(error);
+    // return NextResponse.error(error);
   }
 }
