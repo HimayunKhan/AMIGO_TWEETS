@@ -7,6 +7,7 @@ import PostForm from "../components/PostForm";
 import axios from "axios";
 import PostContent from "../components/PostContent";
 import { useRouter } from "next/navigation";
+import { PulseLoader } from "react-spinners";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -32,7 +33,15 @@ export default function Home() {
   }, []);
 
   if (userInfoStatus === "loading") {
-    return "loading user info";
+    // return "loading user info";
+    return (
+      <div
+        className="absolute inset-0 flex items-center justify-center"
+        // style={{ backgroundColor: "rgba(48, 140, 216,0.9)" }}
+      >
+        <PulseLoader size={14} color={"#fff"} />
+      </div>
+    );
   }
 
   if (userInfo && !userInfo?.username) {
@@ -41,7 +50,16 @@ export default function Home() {
 
   if (!userInfo) {
     router.push("/login");
-    return "no user info";
+    // return "no user info";
+
+    return (
+      <div
+        className="absolute inset-0 flex items-center justify-center"
+        // style={{ backgroundColor: "rgba(48, 140, 216,0.9)" }}
+      >
+        <PulseLoader size={14} color={"#fff"} />
+      </div>
+    );
   }
 
   return (
@@ -50,9 +68,7 @@ export default function Home() {
       <PostForm
         onPost={() => {
           fetchHomePosts();
-          
         }}
-   
       />
       <div className="">
         {posts.length > 0 &&
