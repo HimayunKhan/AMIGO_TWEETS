@@ -4,27 +4,71 @@ import axios from "axios";
 import Avatar from "./Avatar";
 import Upload from "./Upload";
 import { PulseLoader } from "react-spinners";
+import { MdPermMedia } from "react-icons/md";
 
 export default function PostForm({
   onPost,
   compact,
   parent,
   placeholder = "What's happening?",
- 
 }) {
   const { userInfo, status } = useUserInfo();
   const [text, setText] = useState("");
-  const [images, setImages] = useState([]);
-  
+  let [images, setImages] = useState([]);
+  let [imagesArray, setImagesArray] = useState([]);
 
+
+  const onChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+      imagesArray.push(file);
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImages((oldArray) => [...oldArray, reader.result]);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    imagesArray.forEach((item) => {
+      const data = new FormData();
+      data.append("file", item);
+      data.append("upload_preset", "twitterpic");
+      data.append("clound_name", "dlyoovaha");
+      fetch("https://api.cloudinary.com/v1_1/dlyoovaha/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          images.push(data.url);
+        })
+        .catch((error) => console.log(error));
+    });
+  };
 
   async function handlePostSubmit(e) {
     e.preventDefault();
-    await axios.post("/api/posts", { text, parent, images });
-    setText("");
-    setImages([]);
-    if (onPost) {
-      onPost();
+
+    if (images[0]?.includes("cloudinary")) {
+      await axios.post("/api/posts", { text, parent, images });
+      setText("");
+      setImages([]);
+      if (onPost) {
+        onPost();
+      }
+    } else {
+      await axios.post("/api/posts", { text, parent, images });
+      setText("");
+      setImages([]);
+      setImagesArray([]);
+      if (onPost) {
+        onPost();
+      }
     }
   }
 
@@ -67,7 +111,17 @@ export default function PostForm({
             )}
           </Upload>
           {!compact && (
-            <div className="text-right border-t border-twitterBorder pt-2 pb-2">
+            <div className="flex justify-between border-t border-twitterBorder pt-2 pb-2">
+              <label>
+                <MdPermMedia size={25} />
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  id="formFile"
+                  multiple
+                  onChange={onChange}
+                />
+              </label>
               <button className="bg-twitterBlue text-white px-5 py-1 rounded-full">
                 Tweet
               </button>

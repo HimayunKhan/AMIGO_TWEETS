@@ -13,6 +13,8 @@ export default function Upload({children,onUploadFinish}) {
     setIsFileOver(false);
     setIsUploading(true);
     const data = new FormData();
+  console.log("ffffffffffff",files)
+    console.log("wwwwwwwwww",files[0])
     data.append('post', files[0]);
     fetch('/api/upload', {
       method: 'POST',
@@ -38,8 +40,13 @@ export default function Upload({children,onUploadFinish}) {
       }}
     >
       <div className="relative border border-gray-500">
+       
         {(isFileNearby || isFileOver) && (
-          <div className="bg-twitterBlue absolute inset-0 flex items-center justify-center">drop your images here</div>
+          <div className="bg-twitterBlue absolute inset-0 flex items-center justify-center">
+         
+            drop your images here
+            
+            </div>
         )}
         {children({isUploading})}
       </div>

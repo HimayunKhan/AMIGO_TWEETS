@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
 import TopNavLink from "@/components/TopNavLink";
 import { useEffect, useState } from "react";
@@ -8,9 +7,9 @@ import Cover from "@/components/Cover";
 import Avatar from "@/components/Avatar";
 import PostContent from "@/components/PostContent";
 import useUserInfo from "@/hooks/useUserInfo";
+import { MdPermMedia } from "react-icons/md";
 
-export default function UserPage({params}) {
-  const router = useRouter();
+export default function UserPage({ params }) {
   const { username } = params;
   const [profileInfo, setProfileInfo] = useState();
   const [originalUserInfo, setOriginalUserInfo] = useState();
@@ -25,7 +24,6 @@ export default function UserPage({params}) {
       return;
     }
     axios.get("/api/users?username=" + username).then((response) => {
-
       setProfileInfo(response.data.user);
       setOriginalUserInfo(response.data.user);
       setIsFollowing(!!response.data.follow);
@@ -37,7 +35,6 @@ export default function UserPage({params}) {
       return;
     }
     axios.get("/api/posts?author=" + profileInfo._id).then((response) => {
-      
       setPosts(response.data.posts);
       setPostsLikedByMe(response.data.idsLikedByMe);
     });
@@ -74,11 +71,45 @@ export default function UserPage({params}) {
 
   const isMyProfile = profileInfo?._id === userInfo?._id;
 
+  function onChange(e) {
+    e.preventDefault();
+
+    const file = e.target.files[0];
+
+    const data = new FormData();
+    data.append("image", file);
+    fetch("/api/upload", {
+      method: "POST",
+      body: data,
+    }).then(async (response) => {
+      const json = await response?.json();
+      window.location.reload();
+    });
+  }
+
+
+
+  function onChangeCover(e) {
+    e.preventDefault();
+
+    const file = e.target.files[0];
+
+    const data = new FormData();
+    data.append("cover", file);
+    fetch("/api/upload", {
+      method: "POST",
+      body: data,
+    }).then(async (response) => {
+      const json = await response?.json();
+      window.location.reload();
+    });
+  }
+
   return (
     <>
       {!!profileInfo && (
         <div>
-          <div className="px-5 pt-2">
+          <div className="px-5 pt-2 ">
             <TopNavLink title={profileInfo?.name} />
           </div>
           <Cover
@@ -86,9 +117,24 @@ export default function UserPage({params}) {
             editable={isMyProfile}
             onChange={(src) => updateUserImage("cover", src)}
           />
-          <div className="flex justify-between">
-            <div className="ml-5 relative">
-              <div className="absolute -top-12 border-4 rounded-full border-black overflow-hidden">
+          <div>
+            {isMyProfile && (
+              <label className=" relative flex justify-end  mr-2  text-white mt-[-30px]">
+                <MdPermMedia size={25} />
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  id="formFile"
+                  multiple
+                  onChange={onChangeCover}
+                />
+              </label>
+            )}
+          </div>
+
+          <div className="flex justify-between  ">
+            <div className="ml-5 relative ">
+              <div className="absolute -top-12 border-4 rounded-full border-black overflow-hidden ">
                 <Avatar
                   big
                   src={profileInfo.image}
@@ -97,6 +143,18 @@ export default function UserPage({params}) {
                 />
               </div>
             </div>
+            {isMyProfile && (
+              <label className="absolute  ml-[120px]  text-twitterBorder mt-7">
+                <MdPermMedia size={25} />
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  id="formFile"
+                  multiple
+                  onChange={onChange}
+                />
+              </label>
+            )}
             <div className="p-2">
               {!isMyProfile && (
                 <button
@@ -115,7 +173,7 @@ export default function UserPage({params}) {
                   {!editMode && (
                     <button
                       onClick={() => setEditMode(true)}
-                      className="bg-twitterBlue text-white py-2 px-5 rounded-full"
+                      className="bg-twitterBlue text-white mt-5 py-2 px-5 rounded-full"
                     >
                       Edit profile
                     </button>
@@ -211,7 +269,5 @@ export default function UserPage({params}) {
           </div>
         ))}
     </>
-
-
   );
 }
