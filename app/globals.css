@@ -7,3 +7,87 @@ body{
     background-color:#000;
     color:#fff;
 }
+
+
+body::-webkit-scrollbar-button {
+    /* height: 12px; */
+    }
+    body::-webkit-scrollbar {
+    width: 10px;
+    }
+    /* Track */
+    body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    }
+    /* Handle */
+    body::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #888888;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+    body::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 0, 0, 0.4);
+    }
+
+
+
+    body{
+        background-color:#000;
+        color:#fff;
+    }
+    
+    
+    .wrapper::-webkit-scrollbar-button {
+        /* height: 12px; */
+        }
+        .wrapper::-webkit-scrollbar {
+        width: 0px;
+        }
+        /* Track */
+        .wrapper::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        }
+        /* Handle */
+        .wrapper::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: #888888;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+       .wrapper::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(255, 0, 0, 0.4);
+        }
+
+
+
+        .mild-black::-webkit-scrollbar-button {
+            /* Styles for scrollbar button */
+              height: 12px;
+          }
+          
+          .mild-black::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+          }
+          
+          .mild-black::-webkit-scrollbar-thumb {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background: #888888;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+          }
+          
+          .mild-black::-webkit-scrollbar-thumb:window-inactive {
+            background: rgba(255, 0, 0, 0.4);
+          }
+          
+          .mild-black::-webkit-scrollbar {
+            width: 4px;
+          }
+        

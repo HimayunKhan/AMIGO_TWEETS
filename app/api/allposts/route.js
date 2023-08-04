@@ -45,14 +45,14 @@ export async function GET(request, context) {
         searchFilter = { parent };
       }
 
-      const posts = await Post.find(searchFilter)
+      const posts = await Post.find()
         .populate("author")
         .populate({
           path: "parent",
           populate: "author",
         })
         .sort({ createdAt: -1 })
-        .limit(20)
+        .limit(0)
         .exec();
 
       let postsLikedByMe = [];
@@ -94,33 +94,5 @@ export async function POST(request, context) {
     return NextResponse.json(post);
   } catch (error) {
     // return NextResponse.error(error);
-  }
-}
-
-
-
-
-
-
-
-
-export async function DELETE(request, context) {
-  const { id } = context.params;
-
-  try {
-    dbConnect();
-    let post = await Post.findById(id);
-    if (!order) {
-      return new Response("Product not found.", 404);
-    }
-    await Post.deleteOne({ _id: id });
-    const res = {
-      success: true,
-      message: "Order deleted successfully",
-    };
-
-    return NextResponse.json(res);
-  } catch (error) {
-    // return createErrorResponse(error);
   }
 }

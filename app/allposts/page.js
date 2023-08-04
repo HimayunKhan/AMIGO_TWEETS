@@ -1,5 +1,5 @@
 "use client";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import UsernameForm from "@/components/UsernameForm";
 import useUserInfo from "@/hooks/useUserInfo";
@@ -9,12 +9,13 @@ import PostContent from "@/components/PostContent";
 import { useRouter } from "next/navigation";
 import { PulseLoader } from "react-spinners";
 import Link from "next/link";
-import Logo from "@/components/Logo";
-import { HiOutlineSearch } from "react-icons/hi";
 import FullScreenMobileMenu from "@/components/FullScreenMobileMenu";
-import Dropdown from "@/components/Dropdown";
+import Logo from "@/components/Logo";
+import { FaSignOutAlt } from "react-icons/fa";
+import { HiOutlineSearch } from "react-icons/hi";
 
 export default function Home() {
+  const { data: session } = useSession();
   const { userInfo, setUserInfo, status: userInfoStatus } = useUserInfo();
   const [posts, setPosts] = useState([]);
   const [idsLikedByMe, setIdsLikedByMe] = useState([]);
@@ -22,11 +23,10 @@ export default function Home() {
   const [menuopen, setmenuopen] = useState(false);
   const [AllUsersData, setAllUsersData] = useState([]);
 
-  console.log("ooooooo",posts)
-  console.log("userInfo",userInfo)
+ 
 
   function fetchHomePosts() {
-    axios.get("/api/allposts").then((response) => {
+    axios.get("/api/posts").then((response) => {
       setPosts(response.data.posts);
       setIdsLikedByMe(response.data.idsLikedByMe);
     });
@@ -81,7 +81,7 @@ export default function Home() {
         )}
       </>
       <>
-        <div className="flex border-b mb-4 justify-between items-center">
+        <div className="flex justify-between items-center">
           <div className="">
             <Link href={"/"}>
               <span className="sr-only text-twitterBlue">Questt</span>
@@ -90,8 +90,8 @@ export default function Home() {
           </div>
 
           <Link href={`/allposts`}>
-            <button className="text-xl  rounded-full font-bold py-2 px-4">
-              My Feeds
+            <button className="text-md  rounded-full font-bold py-2 px-4">
+              Posts
             </button>
           </Link>
           <button onClick={handleSearch}>
@@ -103,7 +103,15 @@ export default function Home() {
 
           {userInfo && (
             <div className="p-5 text-center border-t border-twitterBorder">
-              <Dropdown />
+              <button
+                onClick={logout}
+                className="bg-black text-black px-2 py-2 rounded-lg "
+              >
+                <FaSignOutAlt
+                  className="text-twitterLightGray bg-black"
+                  size={32}
+                />
+              </button>
             </div>
           )}
         </div>
@@ -114,12 +122,12 @@ export default function Home() {
           }}
         />
         <div className="">
-          {posts?.length > 0 &&
-            posts?.map((post) => (
-              <div className="border-t border-twitterBorder p-5" key={post?._id}>
+          {posts.length > 0 &&
+            posts.map((post) => (
+              <div className="border-t border-twitterBorder p-5" key={post._id}>
                 {post.parent && (
                   <div>
-                    <PostContent {...post.parent}   userID={userInfo?._id}/>
+                    <PostContent {...post.parent} />
                     <div className="relative h-8">
                       <div className="border-l-2 border-twitterBorder h-10 absolute ml-6 -top-4"></div>
                     </div>
@@ -127,8 +135,7 @@ export default function Home() {
                 )}
                 <PostContent
                   {...post}
-                  likedByMe={idsLikedByMe.includes(post?._id)}
-                  userID={userInfo?._id}
+                  likedByMe={idsLikedByMe.includes(post._id)}
                 />
               </div>
             ))}

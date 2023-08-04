@@ -17,7 +17,6 @@ export default function PostForm({
   let [images, setImages] = useState([]);
   let [imagesArray, setImagesArray] = useState([]);
 
-
   const onChange = (e) => {
     const files = Array.from(e.target.files);
 
@@ -94,6 +93,16 @@ export default function PostForm({
                   onChange={(e) => setText(e.target.value)}
                   placeholder={placeholder}
                 />
+                <label className="relative mt-[-30px] mr-3 flex justify-end">
+                  <MdPermMedia size={25} />
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    id="formFile"
+                    multiple
+                    onChange={onChange}
+                  />
+                </label>
                 <div className="flex -mx-2">
                   {images.length > 0 &&
                     images.map((img) => (
@@ -111,8 +120,8 @@ export default function PostForm({
             )}
           </Upload>
           {!compact && (
-            <div className="flex justify-between border-t border-twitterBorder pt-2 pb-2">
-              <label>
+            <div className="flex justify-end border-t border-twitterBorder pt-2 pb-2">
+              {/* <label>
                 <MdPermMedia size={25} />
                 <input
                   type="file"
@@ -121,7 +130,7 @@ export default function PostForm({
                   multiple
                   onChange={onChange}
                 />
-              </label>
+              </label> */}
               <button className="bg-twitterBlue text-white px-5 py-1 rounded-full">
                 Tweet
               </button>
@@ -130,7 +139,7 @@ export default function PostForm({
         </div>
         {compact && (
           <div className="pl-2">
-            <button className="bg-twitterBlue text-white px-5 py-1 rounded-full">
+            <button className="bg-twitterBlue  text-white px-5 py-1 rounded-full">
               Tweet
             </button>
           </div>

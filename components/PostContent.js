@@ -1,10 +1,11 @@
 import Avatar from "./Avatar";
 import Link from "next/link";
 import PostButtons from "./PostButtons";
-import TimeAgo from 'timeago-react';
-
+import TimeAgo from "timeago-react";
+import EditDropDown from "./EditDropDown";
 
 export default function PostContent({
+  userID,
   text,
   author,
   createdAt,
@@ -15,7 +16,9 @@ export default function PostContent({
   images,
   big = false,
 }) {
+  
 
+  const show=userID==author?._id
 
   function showImages() {
     if (!images?.length) {
@@ -23,19 +26,27 @@ export default function PostContent({
     }
 
     return (
-      <div className="flex -mx-1">
-        {images.length > 0 &&
-          images.map((img) => (
-            <div className="m-1" key={img}>
-              <img src={img} alt="" />
-            </div>
-          ))}
+      // <div className="flex -mx-1 overflow-x-auto ">
+      //   {images.length > 0 &&
+      //     images.map((img) => (
+      //       <div className="m-1" key={img} >
+      //         <img src={img} alt="img" style={{ height: '100px', width: 'auto' }}  />
+      //       </div>
+      //     ))}
+      // </div>
+
+      <div className="wrapper flex  overflow-x-auto">
+        {images.map((imageUrl, index) => (
+          <img
+            key={index}
+            src={imageUrl}
+            alt={`Image ${index + 1}`}
+            className="wrapper h-[100px] mr-2"
+          />
+        ))}
       </div>
     );
   }
-
-
-
 
   return (
     <div>
@@ -49,26 +60,32 @@ export default function PostContent({
             </Link>
           )}
         </div>
-        <div className="pl-2 grow">
-          <div>
-            <Link href={"/" + author?.username}>
-              <span className="font-bold pr-1 cursor-pointer">
-                {author?.name}
-              </span>
-            </Link>
-            {big && <br />}
-            <Link href={"/" + author?.username}>
-              <span className="text-twitterLightGray cursor-pointer">
-                @{author?.username}
-              </span>
-            </Link>
-            {createdAt && !big && (
-              <span className="pl-1 text-twitterLightGray">
-               
-                <TimeAgo datetime={createdAt} locale="en" />
-
-              </span>
-            )}
+        <div className="pl-2 grow ">
+          <div className=" flex justify-between items-center">
+            <div>
+              <Link href={"/" + author?.username}>
+                <span className="font-bold pr-1 cursor-pointer">
+                  {author?.name}
+                </span>
+              </Link>
+              {big && <br />}
+              <Link href={"/" + author?.username}>
+                <span className="text-twitterLightGray cursor-pointer">
+                  @{author?.username}
+                </span>
+              </Link>
+              {createdAt && !big && (
+                <span className="pl-1 text-twitterLightGray">
+                  <TimeAgo datetime={createdAt} locale="en" />
+                </span>
+              )}
+            </div>
+              {show && 
+            <div className="-mr-3">
+              {" "}
+              <EditDropDown />{" "}
+            </div>
+              }
           </div>
           {!big && (
             <div>

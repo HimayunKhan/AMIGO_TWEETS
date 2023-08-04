@@ -13,8 +13,6 @@ export default function Upload({children,onUploadFinish}) {
     setIsFileOver(false);
     setIsUploading(true);
     const data = new FormData();
-  console.log("ffffffffffff",files)
-    console.log("wwwwwwwwww",files[0])
     data.append('post', files[0]);
     fetch('/api/upload', {
       method: 'POST',
