@@ -13,6 +13,7 @@ import FullScreenMobileMenu from "@/components/FullScreenMobileMenu";
 import Logo from "@/components/Logo";
 import { FaSignOutAlt } from "react-icons/fa";
 import { HiOutlineSearch } from "react-icons/hi";
+import Dropdown from "@/components/Dropdown";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -22,8 +23,6 @@ export default function Home() {
   const router = useRouter();
   const [menuopen, setmenuopen] = useState(false);
   const [AllUsersData, setAllUsersData] = useState([]);
-
- 
 
   function fetchHomePosts() {
     axios.get("/api/posts").then((response) => {
@@ -81,7 +80,7 @@ export default function Home() {
         )}
       </>
       <>
-        <div className="flex justify-between items-center">
+        {/* <div className="flex justify-between items-center">
           <div className="">
             <Link href={"/"}>
               <span className="sr-only text-twitterBlue">Questt</span>
@@ -114,6 +113,33 @@ export default function Home() {
               </button>
             </div>
           )}
+        </div> */}
+
+        <div className="flex border-b mb-4 justify-between items-center">
+          <div className="">
+            <Link href={"/"}>
+              <span className="sr-only text-twitterBlue">Questt</span>
+              <Logo className={"ml-4 mt-2 w-20 pb-4 lg:w-28"} />
+            </Link>
+          </div>
+
+          <Link href={`/allposts`}>
+            <button className="text-xl  rounded-full font-bold py-2 px-4">
+              My Feeds
+            </button>
+          </Link>
+          <button onClick={handleSearch}>
+            <h1 className="text-md font-bold p-4">
+              {" "}
+              <HiOutlineSearch size={32} />
+            </h1>
+          </button>
+
+          {userInfo && (
+            <div className="p-5 text-center border-t border-twitterBorder">
+              <Dropdown />
+            </div>
+          )}
         </div>
 
         <PostForm
@@ -127,7 +153,13 @@ export default function Home() {
               <div className="border-t border-twitterBorder p-5" key={post._id}>
                 {post.parent && (
                   <div>
-                    <PostContent {...post.parent} />
+                    <PostContent
+                      {...post.parent}
+                      userInfo={userInfo}
+                      onPost={() => {
+                        fetchHomePosts();
+                      }}
+                    />
                     <div className="relative h-8">
                       <div className="border-l-2 border-twitterBorder h-10 absolute ml-6 -top-4"></div>
                     </div>
@@ -136,6 +168,10 @@ export default function Home() {
                 <PostContent
                   {...post}
                   likedByMe={idsLikedByMe.includes(post._id)}
+                  userInfo={userInfo}
+                  onPost={() => {
+                    fetchHomePosts();
+                  }}
                 />
               </div>
             ))}

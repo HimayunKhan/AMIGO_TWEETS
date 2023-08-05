@@ -30,6 +30,7 @@ const Dropdown = () => {
   }, [isDropdownOpen]);
 
   async function logout() {
+    setIsDropdownOpen(false);
     setUserInfo(null);
     await signOut();
   }
@@ -53,7 +54,7 @@ const Dropdown = () => {
 
       {isDropdownOpen && (
         // <div className="absolute z-30 top-10 font-bold right-0  rounded-lg shadow-md p-4 bg-twitterDarkGray">
-        <div className="fixed  absolute  right-0 z-[90] flex flex-col items-center gap-1 bg-dark/20 py-2 text-xl text-white backdrop-blur-md">
+        <div className="fixed  absolute  right-0 z-[50] flex flex-col items-center gap-1 bg-dark/20 py-2 text-xl text-white backdrop-blur-md">
           <button
             onClick={handleButtonClick}
             className="block w-full  text-white text-left py-2 px-4 rounded hover:bg-gray-900 hover:text-twitterBlue border border-gray-500"

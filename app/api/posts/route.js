@@ -97,20 +97,14 @@ export async function POST(request, context) {
   }
 }
 
-
-
-
-
-
-
-
 export async function DELETE(request, context) {
-  const { id } = context.params;
+  const { searchParams } = new URL(request?.url);
+  const id = searchParams.get("postID");
 
   try {
-    dbConnect();
+    await mongooseConnect();
     let post = await Post.findById(id);
-    if (!order) {
+    if (!post) {
       return new Response("Product not found.", 404);
     }
     await Post.deleteOne({ _id: id });
@@ -121,6 +115,21 @@ export async function DELETE(request, context) {
 
     return NextResponse.json(res);
   } catch (error) {
-    // return createErrorResponse(error);
+    console.log("error", error);
   }
+}
+
+export async function PUT(request, context) {
+  try {
+    await mongooseConnect();
+    const { searchParams } = new URL(request?.url);
+    const id = searchParams.get("parentpostID");
+
+    let post = await Post.findById(id);
+
+    post.commentsCount = post.commentsCount - 1;
+    await post.save();
+
+    return new Response("okk");
+  } catch (error) {}
 }

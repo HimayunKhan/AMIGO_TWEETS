@@ -87,8 +87,6 @@ export default function UserPage({ params }) {
     });
   }
 
-
-
   function onChangeCover(e) {
     e.preventDefault();
 
@@ -265,6 +263,10 @@ export default function UserPage({ params }) {
             <PostContent
               {...post}
               likedByMe={postsLikedByMe.includes(post._id)}
+              userInfo={userInfo}
+              onPost={() => {
+                fetchHomePosts();
+              }}
             />
           </div>
         ))}

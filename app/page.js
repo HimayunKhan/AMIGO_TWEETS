@@ -22,19 +22,11 @@ export default function Home() {
   const [menuopen, setmenuopen] = useState(false);
   const [AllUsersData, setAllUsersData] = useState([]);
 
-  console.log("ooooooo",posts)
-  console.log("userInfo",userInfo)
-
   function fetchHomePosts() {
     axios.get("/api/allposts").then((response) => {
       setPosts(response.data.posts);
       setIdsLikedByMe(response.data.idsLikedByMe);
     });
-  }
-
-  async function logout() {
-    setUserInfo(null);
-    await signOut();
   }
 
   useEffect(() => {
@@ -113,36 +105,49 @@ export default function Home() {
             fetchHomePosts();
           }}
         />
-        <div className="">
-          {posts?.length > 0 &&
-            posts?.map((post) => (
-              <div className="border-t border-twitterBorder p-5" key={post?._id}>
-                {post.parent && (
-                  <div>
-                    <PostContent {...post.parent}   userID={userInfo?._id}/>
-                    <div className="relative h-8">
-                      <div className="border-l-2 border-twitterBorder h-10 absolute ml-6 -top-4"></div>
-                    </div>
+
+        {posts?.length > 0 ? (
+          <>
+            <div className="">
+              {posts?.length > 0 &&
+                posts?.map((post) => (
+                  <div
+                    className="border-t border-twitterBorder p-5"
+                    key={post?._id}
+                  >
+                    {post.parent && (
+                      <div>
+                        <PostContent
+                          {...post.parent}
+                          userInfo={userInfo}
+                          onPost={() => {
+                            fetchHomePosts();
+                          }}
+                        />
+                        <div className="relative h-8">
+                          <div className="border-l-2 border-twitterBorder h-10 absolute ml-6 -top-4"></div>
+                        </div>
+                      </div>
+                    )}
+                    <PostContent
+                      {...post}
+                      likedByMe={idsLikedByMe.includes(post?._id)}
+                      userInfo={userInfo}
+                      onPost={() => {
+                        fetchHomePosts();
+                      }}
+                    />
                   </div>
-                )}
-                <PostContent
-                  {...post}
-                  likedByMe={idsLikedByMe.includes(post?._id)}
-                  userID={userInfo?._id}
-                />
-              </div>
-            ))}
-        </div>
-        {/* {userInfo && (
-          <div className="p-5 text-center border-t border-twitterBorder">
-            <button
-              onClick={logout}
-              className="bg-twitterWhite text-black px-5 py-2 rounded-full"
-            >
-              Logout
-            </button>
-          </div>
-        )} */}
+                ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className=" flex items-center justify-center">
+              <PulseLoader size={14} color={"#fff"} />
+            </div>
+          </>
+        )}
       </>
     </>
   );

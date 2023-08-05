@@ -5,7 +5,9 @@ import TimeAgo from "timeago-react";
 import EditDropDown from "./EditDropDown";
 
 export default function PostContent({
-  userID,
+  parent,
+  onPost,
+  userInfo,
   text,
   author,
   createdAt,
@@ -16,25 +18,15 @@ export default function PostContent({
   images,
   big = false,
 }) {
+
+  const show=userInfo?._id==author?._id
   
-
-  const show=userID==author?._id
-
   function showImages() {
     if (!images?.length) {
       return "";
     }
 
     return (
-      // <div className="flex -mx-1 overflow-x-auto ">
-      //   {images.length > 0 &&
-      //     images.map((img) => (
-      //       <div className="m-1" key={img} >
-      //         <img src={img} alt="img" style={{ height: '100px', width: 'auto' }}  />
-      //       </div>
-      //     ))}
-      // </div>
-
       <div className="wrapper flex  overflow-x-auto">
         {images.map((imageUrl, index) => (
           <img
@@ -80,12 +72,17 @@ export default function PostContent({
                 </span>
               )}
             </div>
-              {show && 
-            <div className="-mr-3">
-              {" "}
-              <EditDropDown />{" "}
-            </div>
-              }
+            {show && (
+              <div className="-mr-3">
+                {" "}
+                <EditDropDown 
+                onPost={onPost}
+                postID={_id}
+                parent={parent}
+                />{" "}
+                
+              </div>
+            )}
           </div>
           {!big && (
             <div>

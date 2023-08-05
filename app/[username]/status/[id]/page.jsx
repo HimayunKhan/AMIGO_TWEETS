@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PostContent from "@/components/PostContent";
-import Link from "next/link";
 import useUserInfo from "@/hooks/useUserInfo";
 import PostForm from "@/components/PostForm";
 import TopNavLink from "@/components/TopNavLink";
@@ -25,6 +24,10 @@ export default function PostPage({ params }) {
     });
   }
 
+  function forwardtoHome() {
+    router.back();
+  }
+
   useEffect(() => {
     if (!id) {
       return;
@@ -37,9 +40,14 @@ export default function PostPage({ params }) {
       {!!post?._id && (
         <div className="px-5 py-2">
           <TopNavLink />
-          {post.parent && (
+          {post?.parent && (
             <div className="pb-1">
-              <PostContent {...post.parent} />
+              <PostContent {...post.parent} 
+              userInfo={userInfo}
+              onPost={() => {
+                forwardtoHome();
+              }}
+              />
               <div className="ml-5 h-12 relative">
                 <div
                   className="h-20 border-l-2 border-twitterBorder absolute -top-5"
@@ -49,7 +57,14 @@ export default function PostPage({ params }) {
             </div>
           )}
           <div>
-            <PostContent {...post} big />
+            <PostContent
+              {...post}
+              big
+              userInfo={userInfo}
+              onPost={() => {
+                forwardtoHome();
+              }}
+            />
           </div>
         </div>
       )}
@@ -64,12 +79,16 @@ export default function PostPage({ params }) {
         </div>
       )}
       <div className="">
-        {replies.length > 0 &&
-          replies.map((reply) => (
-            <div className="p-5 border-t border-twitterBorder" key={reply._id}>
+        {replies?.length > 0 &&
+          replies?.map((reply) => (
+            <div className="p-5 border-t border-twitterBorder" key={reply?._id}>
               <PostContent
                 {...reply}
-                likedByMe={repliesLikedByMe.includes(reply._id)}
+                likedByMe={repliesLikedByMe.includes(reply?._id)}
+                userInfo={userInfo}
+                onPost={() => {
+                  forwardtoHome();
+                }}
               />
             </div>
           ))}
