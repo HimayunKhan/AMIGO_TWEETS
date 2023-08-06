@@ -6,12 +6,11 @@ import Upload from "./Upload";
 import { PulseLoader } from "react-spinners";
 import { MdPermMedia } from "react-icons/md";
 
-export default function PostForm({
+export default function PostEditForm({
   onPost,
   compact,
   parent,
   placeholder = "What's happening?",
-  EditMode,
   onClose,
   particularPostID,
 }) {
@@ -22,14 +21,17 @@ export default function PostForm({
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
-
-    files.forEach((file) => {
-      const reader = new FileReader();
-      imagesArray.push(file);
+    console.log(files);
+	
+    files?.forEach((file) => {
+		const reader = new FileReader();
+		imagesArray.push(file);
+		console.log("hwwwww");
 
       reader.onload = () => {
         if (reader.readyState === 2) {
           setImages((oldArray) => [...oldArray, reader.result]);
+          console.log("aaaaaaaaaaaaaaa", images);
         }
       };
 
@@ -56,66 +58,35 @@ export default function PostForm({
   async function handlePostSubmit(e) {
     e.preventDefault();
 
-
-    console.log("jijijijijijjij",images)
-    if (EditMode == "Edit") {
-      if(!(images[0]?.includes("cloudinary"))){
-        console.log("yuyuyuyuyuyu", text, parent, images);
-        await axios.put("/api/posts?editID=" + particularPostID, {
-          text,
-          parent,
-          images,
-        });
-        setText("");
-        setImages([]);
-        setImagesArray([]);
-        if (onPost) {
-          onPost();
-        }
-        if (onClose) {
-          onClose();
-        }
+    if (images[0]?.includes("cloudinary")) {
+      await axios.put("/api/posts?editID=" + particularPostID, {
+        text,
+        parent,
+        images,
+      });
+      setText("");
+      setImages([]);
+      if (onPost) {
+        onPost();
       }
-      
-      if (images[0]?.includes("cloudinary")) {
-        await axios.put("/api/posts?editID=" + particularPostID, {
-          text,
-          parent,
-          images,
-        });
-        setText("");
-        setImages([]);
-        if (onPost) {
-          onPost();
-        }
-        if (onClose) {
-          onClose();
-        }
+      if (onClose) {
+        onClose();
       }
-
-    
-      
-      
-
-
-
-
     } else {
-      if (images[0]?.includes("cloudinary")) {
-        await axios.post("/api/posts", { text, parent, images });
-        setText("");
-        setImages([]);
-        if (onPost) {
-          onPost();
-        }
-      } else {
-        await axios.post("/api/posts", { text, parent, images });
-        setText("");
-        setImages([]);
-        setImagesArray([]);
-        if (onPost) {
-          onPost();
-        }
+      console.log("yuyuyuyuyuyu", text, parent, images);
+      await axios.put("/api/posts?editID=" + particularPostID, {
+        text,
+        parent,
+        images,
+      });
+      setText("");
+      setImages([]);
+      setImagesArray([]);
+      if (onPost) {
+        onPost();
+      }
+      if (onClose) {
+        onClose();
       }
     }
   }
@@ -140,7 +111,7 @@ export default function PostForm({
                       (compact ? "top-[20px]" : "top-[75px]") +
                       " absolute   right-3 flex justify-end"
                     }
-                    htmlFor="formFile"
+                    htmlFor="formFile12"
                   >
                     <MdPermMedia size={25} />
                   </label>
@@ -158,7 +129,7 @@ export default function PostForm({
                 <input
                   type="file"
                   style={{ display: "none" }}
-                  id="formFile"
+                  id="formFile12"
                   multiple
                   onChange={onChange}
                 />

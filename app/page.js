@@ -125,7 +125,7 @@ export default function Home() {
                           }}
                         />
                         <div className="relative h-8">
-                          <div className="border-l-2 border-twitterBorder h-10 absolute ml-6 -top-4"></div>
+                          <div className="border-l-2 border-twitterLightGray h-10 absolute ml-6 -top-4"></div>
                         </div>
                       </div>
                     )}

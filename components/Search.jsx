@@ -21,7 +21,7 @@ const Search = ({ users }) => {
 
   return (
     <>
-      <div className="flex  w-[90%] md:w-[40%]  h-10 inline-flex  items-center justify-between relative">
+      <div className="flex  w-[90%] md:w-[40%] mb-4 h-10 inline-flex  items-center justify-between relative">
         <input
           onChange={handleSearch}
           value={searchQuery}
@@ -34,7 +34,7 @@ const Search = ({ users }) => {
         </span>
         {/* ========== Searchfield ========== */}
         {searchQuery && (
-          <div className=" mild-black absolute z-30 left-0 top-12 w-full mx-auto max-h-50 bg-color1 rounded-lg overflow-y-scroll cursor-pointer text-black">
+          <div className=" mild-black absolute z-30 left-0 top-12 w-full mx-auto h-[260px] bg-color1 rounded-lg overflow-y-scroll cursor-pointer text-black">
             {filteredProducts.length > 0 ? (
               <>
                 {searchQuery &&
@@ -51,7 +51,7 @@ const Search = ({ users }) => {
               </>
             ) : (
               <div className="bg-gray-50 flex items-center justify-center py-10 rounded-lg shadow-lg">
-                <p className="text-xl font-semibold animate-bounce">
+                <p className="text-xl  ml-2 font-semibold animate-bounce">
                   Nothing is matches with your search keywords. Please try
                   again!
                 </p>

@@ -103,14 +103,17 @@ export async function DELETE(request, context) {
 
   try {
     await mongooseConnect();
-    let post = await Post.findById(id);
+    let post = await Post.find();
     if (!post) {
-      return new Response("Product not found.", 404);
+      return new Response("Post not found.", 404);
     }
-    await Post.deleteOne({ _id: id });
+    // await Post.deleteOne({ _id: id });
+    await Post.deleteMany({
+      $or: [{ _id: id }, { "parent._id": id }],
+    });
     const res = {
       success: true,
-      message: "Order deleted successfully",
+      message: "posts deleted successfully",
     };
 
     return NextResponse.json(res);
@@ -124,12 +127,24 @@ export async function PUT(request, context) {
     await mongooseConnect();
     const { searchParams } = new URL(request?.url);
     const id = searchParams.get("parentpostID");
+    if (id) {
+      let post = await Post.findById(id);
 
-    let post = await Post.findById(id);
+      post.commentsCount = post.commentsCount - 1;
+      await post.save();
 
-    post.commentsCount = post.commentsCount - 1;
-    await post.save();
+      return new Response("okk");
+    } else {
+      const { searchParams } = new URL(request?.url);
+      const editID = searchParams.get("editID");
 
-    return new Response("okk");
+      
+      const{text,parent,images}=await request.json();
+
+      await Post.findByIdAndUpdate(editID, { text,parent,images });
+      return new Response("okk");
+
+
+    }
   } catch (error) {}
 }
