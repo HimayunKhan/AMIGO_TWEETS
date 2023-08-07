@@ -15,10 +15,10 @@ export default function useUserInfo() {
       setStatus('unauthenticated');
       return;
     }
-    fetch('/api/users?id='+session.user.id)
+    fetch('/api/users?id='+session?.user?.id)
       .then(response => {
-        response.json().then(json => {
-          setUserInfo(json.user);
+        response?.json().then(json => {
+          setUserInfo(json?.user);
           setStatus('authenticated');
         })
       })

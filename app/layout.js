@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <div className="max-w-lg mx-auto border-l border-r border-twitterBorder min-h-screen">
+          <div className="max-w-lg  mx-auto border-l border-r border-twitterBorder min-h-screen">
             {children}
           </div>
         </Providers>

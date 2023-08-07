@@ -6,6 +6,7 @@ import PostContent from "@/components/PostContent";
 import useUserInfo from "@/hooks/useUserInfo";
 import PostForm from "@/components/PostForm";
 import TopNavLink from "@/components/TopNavLink";
+import { PulseLoader } from "react-spinners";
 
 export default function PostPage({ params }) {
   const router = useRouter();
@@ -14,13 +15,17 @@ export default function PostPage({ params }) {
   const [replies, setReplies] = useState([]);
   const [repliesLikedByMe, setRepliesLikedByMe] = useState([]);
   const { userInfo } = useUserInfo();
+  const [flag, setFlag] = useState(true);
+
   function fetchData() {
     axios.get("/api/posts?id=" + id).then((response) => {
-      setPost(response.data.post);
+      setPost(response?.data?.post);
+      setFlag(false);
     });
     axios.get("/api/posts?parent=" + id).then((response) => {
-      setReplies(response.data.posts);
-      setRepliesLikedByMe(response.data.idsLikedByMe);
+      setReplies(response?.data?.posts);
+      setRepliesLikedByMe(response?.data?.idsLikedByMe);
+      setFlag(false);
     });
   }
 
@@ -42,11 +47,12 @@ export default function PostPage({ params }) {
           <TopNavLink />
           {post?.parent && (
             <div className="pb-1">
-              <PostContent {...post.parent} 
-              userInfo={userInfo}
-              onPost={() => {
-                forwardtoHome();
-              }}
+              <PostContent
+                {...post.parent}
+                userInfo={userInfo}
+                onPost={() => {
+                  forwardtoHome();
+                }}
               />
               <div className="ml-5 h-12 relative">
                 <div
@@ -75,23 +81,37 @@ export default function PostPage({ params }) {
             parent={id}
             compact
             placeholder={"Tweet your reply"}
+            setFlag={setFlag}
           />
         </div>
       )}
       <div className="">
-        {replies?.length > 0 &&
-          replies?.map((reply) => (
-            <div className="p-5 border-t border-twitterBorder" key={reply?._id}>
-              <PostContent
-                {...reply}
-                likedByMe={repliesLikedByMe.includes(reply?._id)}
-                userInfo={userInfo}
-                onPost={() => {
-                  forwardtoHome();
-                }}
-              />
-            </div>
-          ))}
+        {!flag ? (
+          <>
+            {replies?.map((reply) => (
+              <div
+                className="p-5 border-t border-twitterBorder"
+                key={reply?._id}
+              >
+                <PostContent
+                  {...reply}
+                  likedByMe={repliesLikedByMe.includes(reply?._id)}
+                  userInfo={userInfo}
+                  onPost={() => {
+                    forwardtoHome();
+                  }}
+                />
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            <div className=" flex items-center justify-center">
+                  <PulseLoader size={14} color={"#fff"} />
+                </div>
+          
+          </>
+        )}
       </div>
     </>
   );

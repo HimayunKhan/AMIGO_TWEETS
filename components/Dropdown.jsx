@@ -11,19 +11,16 @@ const Dropdown = () => {
   const dropdownRef = useRef();
 
   useEffect(() => {
-    // Function to handle mousedown events outside the dropdown
     const handleMouseDownOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
     };
 
-    // Add event listener when the dropdown is open
     if (isDropdownOpen) {
       document.addEventListener("mousedown", handleMouseDownOutside);
     }
 
-    // Clean up the event listener when the component is unmounted
     return () => {
       document.removeEventListener("mousedown", handleMouseDownOutside);
     };
@@ -53,7 +50,6 @@ const Dropdown = () => {
       />
 
       {isDropdownOpen && (
-        // <div className="absolute z-30 top-10 font-bold right-0  rounded-lg shadow-md p-4 bg-twitterDarkGray">
         <div className="fixed  absolute  right-0 z-[50] flex flex-col items-center gap-1 bg-dark/20 py-2 text-xl text-white backdrop-blur-md">
           <button
             onClick={handleButtonClick}

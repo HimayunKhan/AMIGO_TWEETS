@@ -10,28 +10,24 @@ import { PulseLoader } from "react-spinners";
 import FullScreenMobileMenu from "@/components/FullScreenMobileMenu";
 import Navbar from "@/components/Navbar";
 
-
-export default function Home() {
+export default function Activity() {
   const { userInfo, status: userInfoStatus } = useUserInfo();
   let [posts, setPosts] = useState([]);
   const [idsLikedByMe, setIdsLikedByMe] = useState([]);
   const router = useRouter();
   const [menuopen, setmenuopen] = useState(false);
   const [AllUsersData, setAllUsersData] = useState([]);
-  const [flag, setFlag] = useState(true);
+  const [flag,setFlag]=useState(true)
 
 
   function fetchHomePosts() {
     axios.get("/api/allposts").then((response) => {
-      setFlag(false);
-      setPosts(response?.data?.posts);
-      setIdsLikedByMe(response?.data?.idsLikedByMe);
+      setFlag(false)
+
+      setPosts(response.data.posts);
+      setIdsLikedByMe(response.data.idsLikedByMe);
     });
   }
-
-  posts = posts.filter((item) => {
-    return item.parent == undefined;
-  });
 
   useEffect(() => {
     fetchHomePosts();
@@ -71,16 +67,17 @@ export default function Home() {
           setmenuopen={setmenuopen}
           userInfo={userInfo}
           setAllUsersData={setAllUsersData}
+          url={"activity"}
+
         />
 
         <PostForm
           onPost={() => {
             fetchHomePosts();
-          }}
-          setFlag={setFlag}
+          }}  setFlag={setFlag}
         />
 
-        {!flag ? (
+        {!flag? (
           <>
             <div className="">
               {posts?.length > 0 &&
@@ -126,4 +123,3 @@ export default function Home() {
     </>
   );
 }
-

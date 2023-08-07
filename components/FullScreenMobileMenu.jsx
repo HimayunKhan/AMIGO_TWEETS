@@ -12,7 +12,6 @@ const FullScreenMobileMenu = ({ setopen, users }) => {
 
   return (
     <div className="fixed inset-0 z-[90] flex flex-col  items-center gap-4 bg-dark/80 py-12 text-5xl text-white backdrop-blur-md">
-      {/* <div onClick={() => handleLinkClick("/")}>Home</div> */}
       <div>Search</div>
 
       <Search users={users} />

@@ -14,6 +14,7 @@ export default function PostForm({
   EditMode,
   onClose,
   particularPostID,
+  setFlag,
 }) {
   const { userInfo, status } = useUserInfo();
   const [text, setText] = useState("");
@@ -54,13 +55,13 @@ export default function PostForm({
   };
 
   async function handlePostSubmit(e) {
+    setFlag(false)
+
     e.preventDefault();
 
 
-    console.log("jijijijijijjij",images)
     if (EditMode == "Edit") {
       if(!(images[0]?.includes("cloudinary"))){
-        console.log("yuyuyuyuyuyu", text, parent, images);
         await axios.put("/api/posts?editID=" + particularPostID, {
           text,
           parent,
@@ -75,6 +76,8 @@ export default function PostForm({
         if (onClose) {
           onClose();
         }
+        setFlag(true)
+
       }
       
       if (images[0]?.includes("cloudinary")) {
@@ -91,6 +94,8 @@ export default function PostForm({
         if (onClose) {
           onClose();
         }
+        setFlag(true)
+
       }
 
     
@@ -108,6 +113,8 @@ export default function PostForm({
         if (onPost) {
           onPost();
         }
+        setFlag(true)
+
       } else {
         await axios.post("/api/posts", { text, parent, images });
         setText("");
@@ -116,6 +123,8 @@ export default function PostForm({
         if (onPost) {
           onPost();
         }
+        setFlag(true)
+
       }
     }
   }

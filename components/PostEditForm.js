@@ -21,17 +21,14 @@ export default function PostEditForm({
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
-    console.log(files);
 	
     files?.forEach((file) => {
 		const reader = new FileReader();
 		imagesArray.push(file);
-		console.log("hwwwww");
 
       reader.onload = () => {
         if (reader.readyState === 2) {
           setImages((oldArray) => [...oldArray, reader.result]);
-          console.log("aaaaaaaaaaaaaaa", images);
         }
       };
 
@@ -73,7 +70,6 @@ export default function PostEditForm({
         onClose();
       }
     } else {
-      console.log("yuyuyuyuyuyu", text, parent, images);
       await axios.put("/api/posts?editID=" + particularPostID, {
         text,
         parent,

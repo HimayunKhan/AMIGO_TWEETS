@@ -36,7 +36,6 @@ const EditDropDown = ({ postID, onPost, parent }) => {
       const decCommentCount = axios
         .put("/api/posts?parentpostID=" + parentpostID)
         .then((response) => {
-          console.log("reoo", response.data);
         });
     }
 
@@ -67,7 +66,7 @@ const EditDropDown = ({ postID, onPost, parent }) => {
       </button>
 
       {isDropdownOpen && (
-        <div className="fixed  absolute  right-0 z-[90] flex flex-col items-center gap-1 bg-dark/20 py-2 text-xl text-white backdrop-blur-md">
+        <div className="fixed  absolute  right-4 z-[90] flex flex-col items-center gap-1 bg-dark/20 py-2 text-xl text-white backdrop-blur-md">
           <button
             // onClick={handleEdit}
             onClick={() => handleEdit(postID)}

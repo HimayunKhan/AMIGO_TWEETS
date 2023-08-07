@@ -19,6 +19,9 @@ export default function UserPage({ params }) {
   const [editMode, setEditMode] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
 
+
+ 
+
   useEffect(() => {
     if (!username) {
       return;
@@ -30,20 +33,32 @@ export default function UserPage({ params }) {
     });
   }, [username]);
 
-  useEffect(() => {
-    if (!profileInfo?._id) {
-      return;
-    }
+
+
+  function fetchProfilePosts(){
     axios.get("/api/posts?author=" + profileInfo._id).then((response) => {
       setPosts(response.data.posts);
       setPostsLikedByMe(response.data.idsLikedByMe);
     });
+  }
+
+  useEffect(() => {
+    if (!profileInfo?._id) {
+      return;
+    }
+
+    
+
+    fetchProfilePosts()
+   
   }, [profileInfo]);
 
   function updateUserImage(type, src) {
     setProfileInfo((prev) => ({ ...prev, [type]: src }));
   }
 
+
+  
   async function updateProfile() {
     const { bio, name, username } = profileInfo;
     await axios.put("/api/profile", {
@@ -258,14 +273,14 @@ export default function UserPage({ params }) {
         </div>
       )}
       {posts?.length > 0 &&
-        posts.map((post) => (
-          <div className="p-5 border-t border-twitterBorder" key={post._id}>
+        posts?.map((post) => (
+          <div className="p-5 border-t border-twitterBorder" key={post?._id}>
             <PostContent
               {...post}
-              likedByMe={postsLikedByMe.includes(post._id)}
+              likedByMe={postsLikedByMe.includes(post?._id)}
               userInfo={userInfo}
               onPost={() => {
-                fetchHomePosts();
+                fetchProfilePosts();
               }}
             />
           </div>
