@@ -35,8 +35,8 @@ export default function PostContent({
             src={imageUrl}
             alt={`Image ${index + 1}`}
             className="w-auto h-auto mr-2"
-            width={220}
-            height={180}
+            width={400}
+            height={240}
           />
         ))}
       </div>
