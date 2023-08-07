@@ -19,7 +19,6 @@ export default function Home() {
   const [menuopen, setmenuopen] = useState(false);
   const [AllUsersData, setAllUsersData] = useState([]);
   const [flag, setFlag] = useState(true);
-  console.log("WELCOME TO QUESTT_TWEET")
 
 
   function fetchHomePosts() {
@@ -87,7 +86,7 @@ export default function Home() {
               {posts?.length > 0 &&
                 posts?.map((post) => (
                   <div
-                    className="border-t border-twitterBorder p-5"
+                    className="border-t border-b border-twitterBorder p-5"
                     key={post?._id}
                   >
                     {post.parent && (

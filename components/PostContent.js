@@ -3,6 +3,7 @@ import Link from "next/link";
 import PostButtons from "./PostButtons";
 import TimeAgo from "timeago-react";
 import EditDropDown from "./EditDropDown";
+import Image from "next/image";
 
 export default function PostContent({
   parent,
@@ -29,11 +30,13 @@ export default function PostContent({
     return (
       <div className="wrapper flex  overflow-x-auto">
         {images.map((imageUrl, index) => (
-          <img
+          <Image
             key={index}
             src={imageUrl}
             alt={`Image ${index + 1}`}
-            className="wrapper h-[100px] mr-2"
+            className="w-auto h-auto mr-2"
+            width={220}
+            height={180}
           />
         ))}
       </div>
