@@ -93,16 +93,9 @@ const EditDropDown = ({ postID, onPost, parent }) => {
       )}
 
       {isEditModalOpen && (
-        <div className="mr-2 fixed z-[100] top-0 left-0 right-8 w-screen h-screen flex items-center justify-center backdrop-blur-md">
-          <button
-            onClick={() => {
-              setIsEditModalOpen(false);
-            }}
-            className="text-red-600"
-          >
-            <BsX size={72} />
-          </button>
-          <div className="bg-twitterDarkGray w-[50%] h-auto px-2 py-4 rounded-lg">
+        <div className="mr-2 fixed z-[100] top-0 left-0 right-8 w-screen h-screen backdrop-blur-md  pt-30  p-8">
+         
+          <div className="bg-twitterDarkGray  w-full md:w-[50%]  px-2 py-4 rounded-lg mx-auto ">
             <PostEditForm
               onClose={() => setIsEditModalOpen(false)}
               EditMode={"Edit"}
@@ -110,6 +103,16 @@ const EditDropDown = ({ postID, onPost, parent }) => {
               onPost={onPost}
             />
           </div>
+<div className="flex justify-center items-center">
+          <button
+            onClick={() => {
+              setIsEditModalOpen(false);
+            }}
+            className="text-red-600 flex justify-center items-center "
+          >
+            <BsX size={72} />
+          </button>
+        </div>
         </div>
       )}
     </div>
