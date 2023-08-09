@@ -19,7 +19,7 @@ export default function Home() {
   const [menuopen, setmenuopen] = useState(false);
   const [AllUsersData, setAllUsersData] = useState([]);
   const [flag, setFlag] = useState(true);
-
+ console.log("Welcome to Amigo Tweets")
   function fetchHomePosts() {
     axios.get("/api/allposts").then((response) => {
       setFlag(false);
