@@ -16,15 +16,16 @@ export default function LoginPage() {
     <div className="flex items-center bg-[#07142D] justify-center h-screen">
       <div className="mx-auto">
         <Image
-          src="/logo4.png"
-          width={100}
-          height={100}
+          src="/ert.png"
+          width={300}
+          height={300}
           alt="logo"
           className="mx-auto"
           priority={true}
-          style={{ width: "auto", height: "auto" }}
+          style={{ width: "200px", height: "auto" }}
         />
-
+        <p className="-mt-10 text-5xl text-center ">Amigo  Tweets</p>
+{/* 
         <Image
           src="/logo3.png"
           width={180}
@@ -33,7 +34,7 @@ export default function LoginPage() {
           className="mx-auto"
           priority={true}
           style={{ width: "auto", height: "auto" }}
-        />
+        /> */}
 
         <button
           onClick={async () => {

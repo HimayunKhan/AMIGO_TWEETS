@@ -6,6 +6,7 @@ import Logo from "./Logo";
 import Link from "next/link";
 import Dropdown from "./Dropdown";
 import axios from "axios";
+import Image from "next/image";
 
 const Navbar = ({ setmenuopen, setAllUsersData, userInfo, url }) => {
   const [navState, setNavState] = useState(false);
@@ -43,12 +44,23 @@ const Navbar = ({ setmenuopen, setAllUsersData, userInfo, url }) => {
               : "fixed top-0 left-0 right-0 h-[10vh] flex items-center  gap-0 md:gap-6  justify-center opacity-100 z-[200]  backdrop-blur-md blur-effect-theme"
           }
         >
-          <div className="">
-            <Link href={"/"}>
-              <span className="sr-only text-twitterBlue">Questt</span>
-              <Logo className={"ml-4 mt-2 w-24 pb-4 lg:w-28"} />
-            </Link>
-          </div>
+          <Link href={"/"}>
+            <div className="">
+              <Image
+                src="/ert.png"
+                width={100}
+                height={80}
+                alt="logo"
+                className="ml-4 -mt-2"
+                priority={true}
+                style={{ width: "80px", height: "50px" }}
+              />
+
+              <div className="-mt-5 ml-8">
+                <p>Amigo</p>
+              </div>
+            </div>
+          </Link>
 
           <Link href={`/allposts`}>
             <button className={`text-xl rounded-full font-bold py-2 px-4`}>

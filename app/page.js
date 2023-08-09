@@ -19,7 +19,6 @@ export default function Home() {
   const [menuopen, setmenuopen] = useState(false);
   const [AllUsersData, setAllUsersData] = useState([]);
   const [flag, setFlag] = useState(true);
-  console.log("WELCOME TO QUESTT")
 
   function fetchHomePosts() {
     axios.get("/api/allposts").then((response) => {

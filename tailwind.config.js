@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -17,6 +19,10 @@ module.exports = {
       boxShadow: {
         testShadow: "0px 0px 54px -13px rgba(0,0,0,0.7)",
         test2Shadow:"  rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"
+      },
+      fontFamily: {
+        sans: ['"Sofia Pro"', ...fontFamily.sans],
+        heading: ['"Sofia Pro"', ...fontFamily.sans],
       },
     },
   },
