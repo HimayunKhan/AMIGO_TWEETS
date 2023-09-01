@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { MdLibraryBooks } from "react-icons/md";
 import { AiOutlineComment } from "react-icons/ai";
-import Logo from "./Logo";
 import Link from "next/link";
 import Dropdown from "./Dropdown";
 import axios from "axios";
@@ -79,6 +78,8 @@ const Navbar = ({ setmenuopen, setAllUsersData, userInfo, url }) => {
               />
             </button>
           </Link>
+
+
           <button onClick={handleSearch}>
             <h1 className="text-md font-bold p-4">
               {" "}
@@ -91,6 +92,10 @@ const Navbar = ({ setmenuopen, setAllUsersData, userInfo, url }) => {
               <Dropdown />
             </div>
           )}
+
+
+
+          
         </div>
       </div>
     </>

@@ -20,6 +20,7 @@ export default function PostForm({
   const [text, setText] = useState("");
   const [images, setImages] = useState([]);
   let [imagesArray, setImagesArray] = useState([]);
+  
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
@@ -153,6 +154,7 @@ export default function PostForm({
                   >
                     <MdPermMedia size={25} />
                   </label>
+                  
                   <textarea
                     className={
                       (compact ? "h-10 mt-1" : "h-24") +
@@ -187,6 +189,26 @@ export default function PostForm({
               </div>
             )}
           </Upload>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           {!compact && (
             <div className="flex justify-end border-t border-twitterBorder pt-2 pb-2">

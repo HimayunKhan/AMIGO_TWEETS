@@ -50,10 +50,10 @@ const Dropdown = () => {
       />
 
       {isDropdownOpen && (
-        <div className="fixed  absolute  right-0 z-[50] flex flex-col items-center gap-1 bg-dark/20 py-2 text-xl text-white backdrop-blur-md">
+        <div className="  absolute  right-0 z-[200] flex flex-col items-center gap-1  py-2 text-xl text-white opacity-100   backdrop-blur-md blur-effect-theme">
           <button
             onClick={handleButtonClick}
-            className="block w-full  text-white text-left py-2 px-4 rounded hover:bg-gray-900 hover:text-twitterBlue border border-gray-500"
+            className="block w-full bg-gray-900  text-white text-left py-2 px-4 rounded hover:bg-gray-900 hover:text-twitterBlue border border-gray-500"
           >
             <p> {userInfo?.name}</p>
             <p className="text-[14px] text-twitterLightGray">
@@ -63,7 +63,7 @@ const Dropdown = () => {
           </button>
           <button
             onClick={logout}
-            className="block w-full flex text-white text-left py-2 px-4 rounded hover:bg-gray-900 hover:text-twitterBlue  border border-gray-500"
+            className=" w-full flex bg-gray-900 text-white text-left py-2 px-4 rounded hover:bg-gray-900 hover:text-twitterBlue  border border-gray-500"
           >
             <p>Sign Out</p>
             <FaSignOutAlt

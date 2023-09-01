@@ -4,6 +4,7 @@ import PostButtons from "./PostButtons";
 import TimeAgo from "timeago-react";
 import EditDropDown from "./EditDropDown";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function PostContent({
   parent,
@@ -19,9 +20,24 @@ export default function PostContent({
   images,
   big = false,
 }) {
+  const show = userInfo?._id == author?._id;
+  const [isExpanded, setIsExpanded] = useState(false);
+  const truncatedText =
+    text.length > 150 && !isExpanded ? text.slice(0, 150)  : text;
 
-  const show=userInfo?._id==author?._id
+  const handleToggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+  const handleToggleCollapse = () => {
+    setIsExpanded(false);
+
+    const postContainer = document.getElementById(`post-${_id}`);
+    if (postContainer) {
+      postContainer.scrollIntoView({ behavior: "smooth" });
+    }
   
+  };
+
   function showImages() {
     if (!images?.length) {
       return "";
@@ -55,9 +71,9 @@ export default function PostContent({
             </Link>
           )}
         </div>
-        <div className="pl-2 grow ">
+        <div className="pl-2 grow " >
           <div className=" flex justify-between items-center">
-            <div>
+            <div id={`post-${_id}`}>
               <Link href={"/" + author?.username}>
                 <span className="font-bold pr-1 cursor-pointer">
                   {author?.name}
@@ -78,23 +94,44 @@ export default function PostContent({
             {show && (
               <div className="-mr-3">
                 {" "}
-                <EditDropDown 
-                onPost={onPost}
-                postID={_id}
-                parent={parent}
+                <EditDropDown
+                  onPost={onPost}
+                  postID={_id}
+                  parent={parent}
                 />{" "}
-                
               </div>
             )}
           </div>
           {!big && (
             <div>
-              <Link href={`/${author?.username}/status/${_id}`}>
+        
                 <div className="w-full cursor-pointer">
-                  {text}
+                  {/* {text} */}
+
+                  <Link href={`/${author?.username}/status/${_id}`}>
+                     {truncatedText}
+                     </Link>
+                  {text.length > 150 &&
+                    (isExpanded ? (
+                      <span
+                        className="text-twitterBlue cursor-pointer"
+                        onClick={handleToggleCollapse}
+                      >
+                        {" "}
+                        Less...
+                      </span>
+                    ) : (
+                      <span
+                        className="text-twitterBlue cursor-pointer"
+                        onClick={handleToggleExpand}
+                      >
+                        {" "}
+                        More...
+                      </span>
+                    ))}
                   {showImages()}
                 </div>
-              </Link>
+             
               <PostButtons
                 username={author?.username}
                 id={_id}
