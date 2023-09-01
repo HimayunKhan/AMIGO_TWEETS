@@ -10,7 +10,7 @@ import { PulseLoader } from "react-spinners";
 import FullScreenMobileMenu from "@/components/FullScreenMobileMenu";
 import Navbar from "@/components/Navbar";
 
-export default function Allposts({params}) {
+export default function Allposts({ params }) {
   const { userInfo, setUserInfo, status: userInfoStatus } = useUserInfo();
   const [posts, setPosts] = useState([]);
   const [idsLikedByMe, setIdsLikedByMe] = useState([]);
@@ -74,12 +74,11 @@ export default function Allposts({params}) {
           }}
           setFlag={setFlag}
         />
-       
 
         {!flag ? (
           <>
             <div className="">
-              {posts?.length > 0 &&
+              {posts?.length > 0 ? (
                 posts?.map((post) => (
                   <div
                     className="border-t border-twitterBorder p-5"
@@ -108,7 +107,26 @@ export default function Allposts({params}) {
                       }}
                     />
                   </div>
-                ))}
+                ))
+              ) : (
+                <>
+                  <div className="border-t-2 border-twitterBorder px-5">
+                    <h1 className="text-2xl flex justify-center text-center mt-10 mx-auto text-twitterBorder   ">
+                      Users can view posts exclusively from the people they
+                      follow, ensuring they stay connected with their desired
+                      network.
+                    </h1>{" "}
+                    <br />
+                    <span className="  text-2xl flex justify-center text-center mt-10 mx-auto text-twitterBorder">
+                      <h1>
+                        {" "}
+                        No posts yet... Please do post or follow others to see
+                        any activity here.
+                      </h1>
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
           </>
         ) : (

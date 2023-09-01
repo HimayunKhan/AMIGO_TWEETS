@@ -16,6 +16,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "framer-motion": "^10.16.2",
     "javascript-time-ago": "^2.5.9",
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.1",

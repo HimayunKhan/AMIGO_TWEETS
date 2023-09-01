@@ -134,7 +134,7 @@ export default function PostForm({
     return "";
   }
   return (
-    <form className="mx-5  " onSubmit={handlePostSubmit}>
+    <form className="mx-5  " onSubmit={handlePostSubmit} >
       <div className={(compact ? "items-center" : "") + " flex"}>
         <div className="">
           <Avatar src={userInfo?.image} />

@@ -130,7 +130,7 @@ export default function UserPage({ params }) {
             editable={isMyProfile}
             onChange={(src) => updateUserImage("cover", src)}
           />
-          <div>
+          <div >
             {isMyProfile && (
               <label className=" relative flex justify-end  mr-2  text-white mt-[-30px]">
                 <MdPermMedia size={25} />
@@ -211,7 +211,7 @@ export default function UserPage({ params }) {
               )}
             </div>
           </div>
-          <div className="px-5 mt-2">
+          <div className="px-5 mt-2 border-b border-gray-500">
             {!editMode && (
               <h1 className="font-bold text-xl leading-5">
                 {profileInfo.name}
@@ -233,12 +233,12 @@ export default function UserPage({ params }) {
               </div>
             )}
             {!editMode && (
-              <h2 className="text-twitterLightGray text-sm">
+              <h2 className="text-twitterLightGray text-sm ">
                 @{profileInfo.username}
               </h2>
             )}
             {editMode && (
-              <div>
+              <div >
                 <input
                   type="text"
                   value={profileInfo.username}
@@ -265,14 +265,14 @@ export default function UserPage({ params }) {
                       bio: ev.target.value,
                     }))
                   }
-                  className="bg-twitterBorder p-2 mb-2 rounded-2xl w-full block"
+                  className="bg-twitterBorder p-2 mb-2 rounded-2xl w-full block "
                 />
               </div>
             )}
           </div>
         </div>
       )}
-      {posts?.length > 0 &&
+      {posts?.length > 0 ? (
         posts?.map((post) => (
           <div className="p-5 border-t border-twitterBorder" key={post?._id}>
             <PostContent
@@ -284,7 +284,10 @@ export default function UserPage({ params }) {
               }}
             />
           </div>
-        ))}
+        ))) : <>
+        
+        <h1 className="text-3xl flex justify-center mt-10 mx-auto text-twitterBorder ">No Activity Yet...</h1>
+        </>}
     </>
   );
 }
